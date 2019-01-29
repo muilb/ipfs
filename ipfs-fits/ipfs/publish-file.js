@@ -33,19 +33,20 @@ function pushFile(path1, interval) {
                 console.log(err);
                 logs(err);
             } else {
+                console.log('Added file to ipfs\nIndexing test speed to elastic and create eth contract\nListening data...');
                 indexIPFS(res, function (es_err, es_res) {
                     if (es_err) {
                         logs(es_err);
                     } else {
                         // Make contract ? here
-                        console.log('indexed ipfs');
+                        console.log('indexed ipfs\t', path, '\tto\t', res.hash);
                     }
                 });
 
                 var hash = res.hash || 'loi tra ve ipfs add function';
                 createContract(hash, function (eth_err, eth_res) {
                     if (eth_err) {
-                        console.log('Create error\n');
+                        console.log('Create eth contract error\n');
                         logs(eth_err)
                         return;
                     }
@@ -57,7 +58,7 @@ function pushFile(path1, interval) {
                         type: "IPFS",
                         totaltime: createTime
                     }
-                    console.log('created at:\t', moment.utc().toISOString(), '\tIndexing ...');
+                    console.log('created contract at:\t', moment.utc().toISOString(), '\tIndexing test speed to elastic...');
                     indexContract(body, function (es_err, es_res) {
                         if (err) {
                             console.log('Index contract\t', body.address, '\terror. See logs file');
@@ -66,6 +67,7 @@ function pushFile(path1, interval) {
                         } else {
                             console.log('Indexed\t', body.address);
                         }
+                        console.log('Listening data...\n');
                     });
                 });
             }

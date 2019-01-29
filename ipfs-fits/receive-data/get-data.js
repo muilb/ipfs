@@ -10,7 +10,7 @@ const pubFile = require('../ipfs/publish-file');
 var nats = NATS.connect({'servers': config.natsServers});
 
 nats.on('connect', function(subNats) {
-    console.log('connected');
+    console.log('connected\nListening data...');
 });
 
 nats.on('disconnect', function() {
@@ -26,7 +26,7 @@ function getData() {
     var passStream = new stream.PassThrough();
 // Simple Subscriber
     nats.subscribe(config.junctionId, function(msg) {
-        console.log(msg);
+        // console.log(msg);
         var msgJson = JSON.parse(msg);
         var time = moment.utc(msgJson.timestamp).format(config.formatString);
 
